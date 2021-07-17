@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
-function Home(){
+function Home({ toDos }) {
   const [text, setText] = useState("");
-  function onChange(e){
+  function onChange(e) {
     setText(e.target.value);
   }
-  function onSubmit(e){
+  function onSubmit(e) {
     e.preventDefault();
     setText("");
   }
@@ -13,12 +14,15 @@ function Home(){
     <>
       <h1>To Do</h1>
       <form onSubmit={onSubmit}>
-        <input type="text" value={text} onChange={onChange}/>
+        <input type="text" value={text} onChange={onChange} />
         <button>Add</button>
       </form>
-      <ul></ul>
+      <ul>{JSON.stringify(toDos)}</ul>
     </>
   );
 }
 
-export default Home;
+function mapStateToProps(state) {
+  return { toDos: state };
+}
+export default connect(mapStateToProps)(Home);
